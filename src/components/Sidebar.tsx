@@ -36,6 +36,8 @@ import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import { Link } from 'react-router-dom';
+import SportsVolleyballOutlinedIcon from '@mui/icons-material/SportsVolleyballOutlined';
+
 
 
 import ColorSchemeToggle from './ColorSchemeToggle';
@@ -132,7 +134,7 @@ export default function Sidebar() {
       />
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
         <IconButton variant="soft" color="primary" size="sm">
-          <BrightnessAutoRoundedIcon />
+        <SportsVolleyballOutlinedIcon/>
         </IconButton>
         <Typography level="title-lg">quantum-ui</Typography>
         <ColorSchemeToggle sx={{ ml: 'auto' }} />
@@ -168,7 +170,7 @@ export default function Sidebar() {
           </ListItem>
 
           <ListItem>
-            <ListItemButton component={Link} to="/radar">
+            <ListItemButton component={Link} to="/dashboard">
               <DashboardRoundedIcon />
               <ListItemContent>
                 <Typography level="title-sm">Dashboard</Typography>
@@ -297,11 +299,11 @@ export default function Sidebar() {
             </IconButton>
           </Stack>
           <Typography level="body-xs">
-            Your team has used 80% of your available space. Need more?
+            Pretty much all out of mental capacity. Need more?
           </Typography>
           <LinearProgress variant="outlined" value={80} determinate sx={{ my: 1 }} />
           <Button size="sm" variant="solid">
-            Upgrade plan
+            Help Drew
           </Button>
         </Card>
       </Box>
@@ -310,11 +312,11 @@ export default function Sidebar() {
         <Avatar
           variant="outlined"
           size="sm"
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+          src="https://avatars.githubusercontent.com/u/8642951?v=4"
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">Siriwat K.</Typography>
-          <Typography level="body-xs">siriwatk@test.com</Typography>
+          <Typography level="title-sm">Drew M.</Typography>
+          <Typography level="body-xs">example@auth.com</Typography>
         </Box>
         <IconButton size="sm" variant="plain" color="neutral">
           <LogoutRoundedIcon />

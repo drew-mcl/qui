@@ -7,12 +7,6 @@ import Collapse from '@mui/material/Collapse';
 import { alpha, styled } from '@mui/material/styles';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem, TreeItemProps, treeItemClasses } from '@mui/x-tree-view/TreeItem';
-import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material'; // Helps with CSS reset and consistent styling
-import { ThemeProvider } from '@mui/material/styles';
-import StyledEngineProvider from '@mui/material/StyledEngineProvider';
-
-
 
 function MinusSquare(props: SvgIconProps) {
   return (
@@ -80,21 +74,8 @@ const StyledTreeItem = styled(CustomTreeItem)(({ theme }) => ({
   },
 }));
 
-const treeViewTheme = createTheme({
-  // This will ensure all default values are included and you
-  // are only overriding what's necessary
-  palette: {
-    action: {
-      hover: 'rgba(0, 0, 0, 0.08)',
-    },
-  },
-});
-
-
-export default function TreeViewComponent() {
+export default function CustomizedTreeView() {
   return (
-    <StyledEngineProvider injectFirst>
-    <ThemeProvider theme={treeViewTheme}>
     <Box sx={{ minHeight: 270, flexGrow: 1, maxWidth: 300 }}>
       <TreeView
         aria-label="customized"
@@ -120,7 +101,5 @@ export default function TreeViewComponent() {
         </StyledTreeItem>
       </TreeView>
     </Box>
-    </ThemeProvider>
-    </StyledEngineProvider>
   );
 }

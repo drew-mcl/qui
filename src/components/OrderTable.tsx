@@ -24,6 +24,7 @@ import Menu from '@mui/joy/Menu';
 import MenuButton from '@mui/joy/MenuButton';
 import MenuItem from '@mui/joy/MenuItem';
 import Dropdown from '@mui/joy/Dropdown';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 // icons
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SearchIcon from '@mui/icons-material/Search';
@@ -42,7 +43,7 @@ import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 
 const rows = [
   {
-    id: 'INV-1234',
+    id: 'O-1234',
     date: 'Feb 3, 2023',
     status: 'Rejected',
     customer: {
@@ -52,7 +53,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1233',
+    id: 'O-1233',
     date: 'Feb 3, 2023',
     status: 'Successful',
     customer: {
@@ -62,7 +63,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1232',
+    id: 'O-1232',
     date: 'Feb 3, 2023',
     status: 'Rejected',
     customer: {
@@ -72,7 +73,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1231',
+    id: 'O-1231',
     date: 'Feb 3, 2023',
     status: 'Rejected',
     customer: {
@@ -82,7 +83,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1230',
+    id: 'O-1230',
     date: 'Feb 3, 2023',
     status: 'Cancelled',
     customer: {
@@ -92,7 +93,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1229',
+    id: 'O-1229',
     date: 'Feb 3, 2023',
     status: 'Cancelled',
     customer: {
@@ -102,7 +103,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1228',
+    id: 'O-1228',
     date: 'Feb 3, 2023',
     status: 'Rejected',
     customer: {
@@ -112,7 +113,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1227',
+    id: 'O-1227',
     date: 'Feb 3, 2023',
     status: 'Successful',
     customer: {
@@ -122,7 +123,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1226',
+    id: 'O-1226',
     date: 'Feb 3, 2023',
     status: 'Cancelled',
     customer: {
@@ -132,7 +133,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1234',
+    id: 'O-1234',
     date: 'Feb 3, 2023',
     status: 'Successful',
     customer: {
@@ -142,7 +143,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1233',
+    id: 'O-1233',
     date: 'Feb 3, 2023',
     status: 'Cancelled',
     customer: {
@@ -152,7 +153,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1232',
+    id: 'O-1232',
     date: 'Feb 3, 2023',
     status: 'Successful',
     customer: {
@@ -162,7 +163,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1231',
+    id: 'O-1231',
     date: 'Feb 3, 2023',
     status: 'Rejected',
     customer: {
@@ -172,7 +173,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1230',
+    id: 'O-1230',
     date: 'Feb 3, 2023',
     status: 'Successful',
     customer: {
@@ -182,7 +183,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1229',
+    id: 'O-1229',
     date: 'Feb 3, 2023',
     status: 'Cancelled',
     customer: {
@@ -192,7 +193,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1228',
+    id: 'O-1228',
     date: 'Feb 3, 2023',
     status: 'Cancelled',
     customer: {
@@ -202,7 +203,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1227',
+    id: 'O-1227',
     date: 'Feb 3, 2023',
     status: 'Successful',
     customer: {
@@ -212,7 +213,7 @@ const rows = [
     },
   },
   {
-    id: 'INV-1226',
+    id: 'O-1226',
     date: 'Feb 3, 2023',
     status: 'Cancelled',
     customer: {
@@ -369,13 +370,13 @@ export default function OrderTable() {
                 justifyContent: 'space-between',
               }}
             >
-              <Typography level="h2">Orders</Typography>
+              <Typography level="h2">Send Orders</Typography>
               <Button
                 color="primary"
-                startDecorator={<DownloadRoundedIcon />}
+                startDecorator={<DriveFileRenameOutlineIcon />}
                 size="sm"
               >
-                Download PDF
+                Create Order
               </Button>
             </Box>
       <Sheet
@@ -506,12 +507,12 @@ export default function OrderTable() {
                     },
                   }}
                 >
-                  Invoice
+                  Order Number
                 </Link>
               </th>
               <th style={{ width: 140, padding: '12px 6px' }}>Date</th>
               <th style={{ width: 140, padding: '12px 6px' }}>Status</th>
-              <th style={{ width: 240, padding: '12px 6px' }}>Customer</th>
+              <th style={{ width: 240, padding: '12px 6px' }}>Submitter</th>
               <th style={{ width: 140, padding: '12px 6px' }}> </th>
             </tr>
           </thead>
@@ -574,7 +575,7 @@ export default function OrderTable() {
                 <td>
                   <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                     <Link level="body-xs" component="button">
-                      Download
+                      Resend
                     </Link>
                     <RowMenu />
                   </Box>

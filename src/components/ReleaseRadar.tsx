@@ -22,8 +22,6 @@ import SearchIcon from '@mui/icons-material/Search';
 
 
 
-
-
 // Dummy data
 interface AppInstance {
     id: string;

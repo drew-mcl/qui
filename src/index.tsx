@@ -12,12 +12,19 @@ import Home from './components/Home';
 import OrderTable from './components/OrderTable';
 import AppDataTable  from './components/ReleaseRadar';
 import EtcdViewer from './components/EtcdViewer';
+import Dashboard from './components/Dashboard';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import theme from './theme';
-import { ThemeProvider } from '@mui/material/styles';
+import {
+  experimental_extendTheme as materialExtendTheme,
+  Experimental_CssVarsProvider as MaterialCssVarsProvider,
+  THEME_ID as MATERIAL_THEME_ID,
+} from '@mui/material/styles';
+import Launcher from './components/Launcher';
+
+const materialTheme = materialExtendTheme();
 
 
 const root = ReactDOM.createRoot(
@@ -36,6 +43,14 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "dashboard/",
+        element: <Dashboard />,
+      },
+      {
+        path: "launcher/",
+        element: <Launcher />,
+      },
+      {
         path: "orders/",
         element: <OrderTable />,
       },
@@ -52,10 +67,10 @@ const router = createBrowserRouter([
 ]);
 
 root.render(
-  <React.StrictMode>
-      <ThemeProvider theme={theme}>
+  <React.StrictMode> 
+    <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
     <RouterProvider router={router} />
-    </ThemeProvider>
+    </MaterialCssVarsProvider>
   </React.StrictMode>
 );
 
