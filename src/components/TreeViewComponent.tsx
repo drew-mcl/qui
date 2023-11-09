@@ -7,6 +7,9 @@ import Collapse from '@mui/material/Collapse';
 import { alpha, styled } from '@mui/material/styles';
 import { TreeView } from '@mui/x-tree-view/TreeView';
 import { TreeItem, TreeItemProps, treeItemClasses } from '@mui/x-tree-view/TreeItem';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
 
 function MinusSquare(props: SvgIconProps) {
   return (
@@ -74,32 +77,49 @@ const StyledTreeItem = styled(CustomTreeItem)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedTreeView() {
-  return (
-    <Box sx={{ minHeight: 270, flexGrow: 1, maxWidth: 300 }}>
-      <TreeView
-        aria-label="customized"
-        defaultExpanded={['1']}
-        defaultCollapseIcon={<MinusSquare />}
-        defaultExpandIcon={<PlusSquare />}
-        defaultEndIcon={<CloseSquare />}
-        sx={{ overflowX: 'hidden' }}
-      >
-        <StyledTreeItem nodeId="1" label="Main">
-          <StyledTreeItem nodeId="2" label="Hello" />
-          <StyledTreeItem nodeId="3" label="Subtree with children">
-            <StyledTreeItem nodeId="6" label="Hello" />
-            <StyledTreeItem nodeId="7" label="Sub-subtree with children">
-              <StyledTreeItem nodeId="9" label="Child 1" />
-              <StyledTreeItem nodeId="10" label="Child 2" />
-              <StyledTreeItem nodeId="11" label="Child 3" />
-            </StyledTreeItem>
-            <StyledTreeItem nodeId="8" label="Hello" />
-          </StyledTreeItem>
-          <StyledTreeItem nodeId="4" label="World" />
-          <StyledTreeItem nodeId="5" label="Something something" />
-        </StyledTreeItem>
-      </TreeView>
-    </Box>
-  );
+// Define the structure of your node object
+interface Node {
+  id: string;
+  name: string;
+  children?: Node[];
 }
+
+interface TreeViewComponentProps {
+  onNodeSelect: (nodeId: string) => void; 
+}
+  const TreeViewComponent: React.FC<TreeViewComponentProps> = ({ onNodeSelect }) => {
+    const [nodes, setNodes] = useState<Node[]>([]);
+  
+    useEffect(() => {
+      axios.get('/api/keys')
+          .then(response => {
+              setNodes(response.data);
+          })
+          .catch(error => console.error('Error fetching keys:', error));
+    }, []);
+  
+    const renderTree = (nodes: Node[]): React.ReactNode => nodes.map((node: Node) => (
+      <StyledTreeItem
+        key={node.id}
+        nodeId={node.id}
+        label={node.name}
+        children={node.children ? renderTree(node.children) : null}
+      />
+    ));
+  
+    return (
+      <Box sx={{ minHeight: 270, flexGrow: 1, maxWidth: 300, overflowY: 'auto' }}>
+        <TreeView
+          aria-label="customized"
+          defaultCollapseIcon={<MinusSquare />}
+          defaultExpandIcon={<PlusSquare />}
+          defaultEndIcon={<CloseSquare />}
+          onNodeSelect={(event, nodeId) => onNodeSelect(nodeId)}
+        >
+          {renderTree(nodes)}
+        </TreeView>
+      </Box>
+    );
+  };
+  
+  export default TreeViewComponent;

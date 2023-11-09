@@ -2,7 +2,11 @@ import React from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 
 interface KeyDetailsProps {
-  selectedKey: string;
+  selectedKey: {
+    nodeId: string,
+    name: string;
+    value: string;
+  };
 }
 
 const KeyDetailsComponent: React.FC<KeyDetailsProps> = ({ selectedKey }) => {
@@ -13,9 +17,13 @@ const KeyDetailsComponent: React.FC<KeyDetailsProps> = ({ selectedKey }) => {
           <Typography variant="h6" component="div">
             Key Details
           </Typography>
-          {/* Display selected key details */}
+          {/* Display selected key name */}
+          <Typography variant="body1" color="text.secondary">
+            Key: {selectedKey.nodeId}
+          </Typography>
+          {/* Display selected key value */}
           <Typography variant="body2">
-            Details for {selectedKey}
+            Value: {selectedKey.value}
           </Typography>
         </CardContent>
       </Card>
@@ -24,3 +32,4 @@ const KeyDetailsComponent: React.FC<KeyDetailsProps> = ({ selectedKey }) => {
 };
 
 export default KeyDetailsComponent;
+
