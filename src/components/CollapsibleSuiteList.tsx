@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
 import Box from '@mui/joy/Box';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
@@ -9,14 +8,43 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import suitesData from '../data/suites.json';
 import appsData from '../data/apps.json';
 import SuiteAppsContext from '../context/SuiteAppsContext';
+import { useContext, useEffect, useState } from 'react';
+
 
 // Assuming the structure of your JSON data, define the types
-type Suite = typeof suitesData[number];
+type Suite = {
+  id: string;
+  name: string;
+  apps: string[];
+};
 type App = typeof appsData[number];
 
 export default function CollapsibleSuiteList() {
   const { setApps } = useContext(SuiteAppsContext);
   const [openSuiteIds, setOpenSuiteIds] = useState<Record<string, boolean>>({});
+  const [suitesData, setSuitesData] = useState<Suite[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+
+  useEffect(() => {
+    fetch('http://localhost:8080/suites')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error fetching suites: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setSuitesData(data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setIsLoading(false);
+      });
+  }, []);
+
 
    // Handles clicking on the suite name
 const handleSuiteNameClick = (suiteId: string) => {
@@ -52,6 +80,13 @@ const handleToggleSuite = (event: React.MouseEvent<HTMLElement>, suiteId: string
 };
 
 
+if (isLoading) {
+  return <div>Loading...</div>;
+}
+
+if (error) {
+  return <div>Error: {error.message}</div>;
+}
 
 
   return (
