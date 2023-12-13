@@ -1,0 +1,49 @@
+[
+    {"id": "app4", "name": "app", "version": "4.2", "group":"my-group", "phase":4 },
+    {"id": "app5", "name": "app", "version": "5.3", "group":"my-group", "phase":5 },
+    {"id": "app6", "name": "app", "version": "6.1", "group":"my-group", "phase":6 },
+    {"id": "app7", "name": "app", "version": "7.0", "group":"my-group", "phase":7 },
+    {"id": "app8", "name": "app", "version": "8.2", "group":"my-group", "phase":8 },
+    {"id": "app9", "name": "app", "version": "9.5", "group":"my-group", "phase":9 },
+    {
+        "id": "app1",
+        "name": "App 1",
+        "version": "1.0",
+        "group": "Group A",
+        "phase": 1,
+        "sidecars": [
+          {
+            "name": "Sidecar 1",
+            "group": "Group A",
+            "version": "1.1"
+          },
+          {
+            "name": "Sidecar 2",
+            "group": "Group B",
+            "version": "2.0"
+          }
+        ]
+      },
+      {
+        "id": "app2",
+        "name": "App 2",
+        "version": "2.0",
+        "group": "Group B",
+        "phase": 2,
+        "sidecars": [
+          {
+            "name": "Sidecar 3",
+            "group": "Group A",
+            "version": "1.0"
+          }
+        ]
+      },
+      {
+        "id": "app3",
+        "name": "App 3",
+        "version": "3.0",
+        "group": "Group C",
+        "phase": 3,
+        "sidecars": []
+      }
+]

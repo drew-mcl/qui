@@ -1,53 +1,93 @@
 import * as React from 'react';
-import Button from '@mui/joy/Button';
-import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import CardActions from '@mui/joy/CardActions';
-import CircularProgress from '@mui/joy/CircularProgress';
+
 import Typography from '@mui/joy/Typography';
-import SvgIcon from '@mui/joy/SvgIcon';
 import Box from '@mui/joy/Box';
+import Button from '@mui/joy/Button';
 import Breadcrumbs from '@mui/joy/Breadcrumbs';
 import Link from '@mui/joy/Link';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import CollapsibleSuiteList from './CollapsibleSuiteList';
+import SessionTable from './SessionTable';
+import SuiteAppsContext from '../context/SuiteAppsContext';
+import TextField from '@mui/joy/TextField';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import { useState } from 'react'; // Make sure to import useState
+import SubmitSessionDialog from './SubmitSessionDialog';
 
+
+type AppType = {
+    id: string;
+    name: string;
+    version: string;
+    group: string;
+    phase: number; 
+};
 
 export default function Launcher() {
-  return (
+  const [apps, setApps] = React.useState<AppType[]>([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [submissionName, setSubmissionName] = useState('');
 
+  const handleOpenDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
+
+  const handleSubmit = () => {
+    // Here you would send the data to the backend
+    const dataToSend = {
+      name: submissionName,
+      apps: apps,
+    };
+
+    console.log('Sending to backend:', JSON.stringify(dataToSend));
+    // You would use fetch or axios to send the data to your backend here
+
+    handleCloseDialog();
+  };
+
+  return (
     <React.Fragment>
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Breadcrumbs
-            size="sm"
-            aria-label="breadcrumbs"
-            separator={<ChevronRightRoundedIcon fontSize="small" />}
-            sx={{ pl: 0 }}
-        >
-            <Link
-                underline="none"
-                color="neutral"
-                href="#some-link"
-                aria-label="Home"
+              <SuiteAppsContext.Provider value={{ apps, setApps }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Breadcrumbs
+                size="sm"
+                aria-label="breadcrumbs"
+                separator={<ChevronRightRoundedIcon fontSize="small" />}
+                sx={{ pl: 0 }}
+              >
+                <Link
+                  underline="none"
+                  color="neutral"
+                  href="#some-link"
+                  aria-label="Home"
+                >
+                  <HomeRoundedIcon />
+                </Link>
+                <Typography color="primary" fontWeight={500} fontSize={12}>
+                  Launcher
+                </Typography>
+              </Breadcrumbs>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                my: 1,
+                gap: 1,
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: { xs: 'start', sm: 'center' },
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+              }}
             >
-                <HomeRoundedIcon />
-            </Link>
-            <Link
-              underline="hover"
-              color="neutral"
-              href="#some-link"
-              fontSize={12}
-              fontWeight={500}
-            >
-              Dashboard
-            </Link>
-            <Typography color="primary" fontWeight={500} fontSize={12}>
-              Launcher
-            </Typography>
-        </Breadcrumbs>
-    </Box>
-    <Box
-        sx={{
+              <Typography level="h2">Dynamic Environment Builder</Typography>
+              <SubmitSessionDialog />
+            </Box>
+    <Box sx={{
         display: 'flex',
         my: 1,
         gap: 1,
@@ -55,45 +95,25 @@ export default function Launcher() {
         alignItems: { xs: 'start', sm: 'center' },
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-        }}
-    >
-        <Typography level="h2">Launcher</Typography>
-    </Box>
+        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' }, // Stack on small screens, row on larger screens
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            gap: 2, // Space between components
+          }}
+        >
+          <CollapsibleSuiteList />
+          <SessionTable />
+        </Box>
+  </Box>
+  </SuiteAppsContext.Provider>
 
+  </React.Fragment>
 
-    <Card variant="solid" color="primary" invertedColors>
-      <CardContent orientation="horizontal">
-        <CircularProgress size="lg" determinate value={20}>
-          <SvgIcon>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"
-              />
-            </svg>
-          </SvgIcon>
-        </CircularProgress>
-        <CardContent>
-          <Typography level="body-md">Gross profit</Typography>
-          <Typography level="h2">$ 432.6M</Typography>
-        </CardContent>
-      </CardContent>
-      <CardActions>
-        <Button variant="soft" size="sm">
-          Add to Watchlist
-        </Button>
-        <Button variant="solid" size="sm">
-          See breakdown
-        </Button>
-      </CardActions>
-    </Card>
-    </React.Fragment>
+  
   );
 }
+

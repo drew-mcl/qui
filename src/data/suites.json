@@ -1,0 +1,20 @@
+[
+    {
+    "id": "suite1",
+    "name": "Development Suite",
+    "description": "A set of tools for software development",
+    "apps": ["app1", "app2", "app3"]
+    },
+    {
+    "id": "suite2",
+    "name": "Design Suite",
+    "description": "A set of tools for design",
+    "apps": ["app4", "app5", "app6"]
+    },
+    {
+    "id": "suite3",
+    "name": "Office Suite",
+    "description": "A set of tools for office work",
+    "apps": ["app7", "app8", "app9"]
+    }
+]

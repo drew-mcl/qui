@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import ErrorPage from './error';
 import Home from './components/Home';
+import Launcher from './components/Launcher';
 import OrderTable from './components/OrderTable';
 import AppDataTable  from './components/ReleaseRadar';
 import EtcdViewer from './components/EtcdViewer';
@@ -22,7 +23,6 @@ import {
   Experimental_CssVarsProvider as MaterialCssVarsProvider,
   THEME_ID as MATERIAL_THEME_ID,
 } from '@mui/material/styles';
-import Launcher from './components/Launcher';
 
 const materialTheme = materialExtendTheme();
 
@@ -47,12 +47,12 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "launcher/",
-        element: <Launcher />,
-      },
-      {
         path: "orders/",
         element: <OrderTable />,
+      },
+      {
+        path: "launcher/",
+        element: <Launcher />,
       },
       {
         path: "radar/",
