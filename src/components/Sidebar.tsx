@@ -21,6 +21,7 @@ import Stack from '@mui/joy/Stack';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
+import CloudSyncIcon from '@mui/icons-material/CloudSync';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
@@ -188,6 +189,16 @@ export default function Sidebar() {
           </ListItem>
 
           <ListItem>
+            <ListItemButton component={Link} to="/config">
+              <CloudSyncIcon />
+              <ListItemContent>
+                <Typography level="title-sm">Adjust Configs</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
+
+          <ListItem>
             <ListItemButton component={Link} to="/orders">
               <RouteIcon />
               <ListItemContent>
@@ -195,6 +206,7 @@ export default function Sidebar() {
               </ListItemContent>
             </ListItemButton>
           </ListItem>
+
 
         
           <ListItem>
@@ -299,11 +311,11 @@ export default function Sidebar() {
             </IconButton>
           </Stack>
           <Typography level="body-xs">
-            Pretty much all out of mental capacity. Need more?
+            example warning
           </Typography>
           <LinearProgress variant="outlined" value={80} determinate sx={{ my: 1 }} />
           <Button size="sm" variant="solid">
-            Help Drew
+            free space
           </Button>
         </Card>
       </Box>
@@ -316,7 +328,7 @@ export default function Sidebar() {
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography level="title-sm">Drew M.</Typography>
-          <Typography level="body-xs">example@auth.com</Typography>
+          <Typography level="body-xs">example@drewm.zip</Typography>
         </Box>
         <IconButton size="sm" variant="plain" color="neutral">
           <LogoutRoundedIcon />

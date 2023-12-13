@@ -1,20 +1,154 @@
 [
     {
-    "id": "suite1",
-    "name": "Development Suite",
-    "description": "A set of tools for software development",
-    "apps": ["app1", "app2", "app3"]
-    },
+        "id": "suite1",
+        "name": "Development Suite",
+        "description": "A set of tools for software development",
+        "apps": [
+                    {
+                        "id": "uuid-4",
+                        "name": "app",
+                        "version": "4.2",
+                        "group": "my-group",
+                        "phase": 4
+                    },
+                    {
+                        "id": "uuid-5",
+                        "name": "app",
+                        "version": "5.3",
+                        "group": "my-group",
+                        "phase": 5
+                    },
+                    {
+                        "id": "uuid-6",
+                        "name": "app",
+                        "version": "6.1",
+                        "group": "my-group",
+                        "phase": 6
+                    },
+                    {
+                        "id": "uuid-7",
+                        "name": "app",
+                        "version": "7.0",
+                        "group": "my-group",
+                        "phase": 7
+                    },
+                    {
+                        "id": "uuid-8",
+                        "name": "app",
+                        "version": "8.2",
+                        "group": "my-group",
+                        "phase": 8
+                    },
+                    {
+                        "id": "uuid-9",
+                        "name": "app",
+                        "version": "9.5",
+                        "group": "my-group",
+                        "phase": 9
+                    },
+                    {
+                        "id": "uuid-1",
+                        "name": "App 1",
+                        "version": "1.0",
+                        "group": "Group A",
+                        "phase": 1,
+                        "sidecars": [
+                            {
+                                "id": "uuid-sidecar-1",
+                                "name": "Sidecar 1",
+                                "group": "Group A",
+                                "version": "1.1"
+                            },
+                            {
+                                "id": "uuid-sidecar-2",
+                                "name": "Sidecar 2",
+                                "group": "Group B",
+                                "version": "2.0"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "uuid-2",
+                        "name": "App 2",
+                        "version": "2.0",
+                        "group": "Group B",
+                        "phase": 2,
+                        "sidecars": [
+                            {
+                                "id": "uuid-sidecar-3",
+                                "name": "Sidecar 3",
+                                "group": "Group A",
+                                "version": "1.0"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "uuid-3",
+                        "name": "App 3",
+                        "version": "3.0",
+                        "group": "Group C",
+                        "phase": 3,
+                        "sidecars": []
+                    }
+                ]
+                    
+        },
     {
-    "id": "suite2",
-    "name": "Design Suite",
-    "description": "A set of tools for design",
-    "apps": ["app4", "app5", "app6"]
-    },
-    {
-    "id": "suite3",
-    "name": "Office Suite",
-    "description": "A set of tools for office work",
-    "apps": ["app7", "app8", "app9"]
+        "id": "suite2",
+        "name": "Design Suite",
+        "description": "A set of tools for design",
+        "apps": [
+            {
+                "id": "uuid-98",
+                "name": "app",
+                "version": "9.5",
+                "group": "my-group",
+                "phase": 9
+            },
+            {
+                "id": "uuid-188",
+                "name": "App 1",
+                "version": "1.0",
+                "group": "Group A",
+                "phase": 1,
+                "sidecars": [
+                    {
+                        "id": "uuid-sidecar-81",
+                        "name": "Sidecar 1",
+                        "group": "Group A",
+                        "version": "1.1"
+                    },
+                    {
+                        "id": "uuid-sidecar-92",
+                        "name": "Sidecar 2",
+                        "group": "Group B",
+                        "version": "2.0"
+                    }
+                ]
+            },
+            {
+                "id": "uuid-872",
+                "name": "App 2",
+                "version": "2.0",
+                "group": "Group B",
+                "phase": 2,
+                "sidecars": [
+                    {
+                        "id": "uuid-sidecar-783",
+                        "name": "Sidecar 3",
+                        "group": "Group A",
+                        "version": "1.0"
+                    }
+                ]
+            },
+            {
+                "id": "uuid-03",
+                "name": "App 3",
+                "version": "3.0",
+                "group": "Group C",
+                "phase": 3,
+                "sidecars": []
+            }
+        ]
     }
 ]

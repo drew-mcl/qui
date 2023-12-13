@@ -73,12 +73,16 @@ export default function SessionTable() {
 
   return (
     <Table>
+        <thead>
+        <tr>
+          <th>App</th>
+          <th>Version</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
       <tbody>
         {apps.map((app: AppType) => (
           <React.Fragment key={app.id}>
-
-
-            
             <tr>
             <td>{app.sidecars && app.sidecars.length > 0 && (
                    <IconButton

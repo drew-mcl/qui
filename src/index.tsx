@@ -23,6 +23,7 @@ import {
   Experimental_CssVarsProvider as MaterialCssVarsProvider,
   THEME_ID as MATERIAL_THEME_ID,
 } from '@mui/material/styles';
+import ConfigAdjuster from './components/ConfigAdjuster';
 
 const materialTheme = materialExtendTheme();
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "radar/",
         element: <AppDataTable/>,
+      },
+      {
+        path: "config/",
+        element: <ConfigAdjuster />,
       },
       {
         path: "etcd/",
