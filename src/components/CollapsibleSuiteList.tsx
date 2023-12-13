@@ -6,7 +6,7 @@ import ListItemButton from '@mui/joy/ListItemButton';
 import IconButton from '@mui/joy/IconButton';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import SuiteAppsContext from '../context/SuiteAppsContext';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import suitesData from '../data/suites.json'; // Assuming suites.json is the updated JSON file
 
@@ -28,9 +28,20 @@ type App = {
 export default function CollapsibleSuiteList() {
   const { setApps } = useContext(SuiteAppsContext);
   const [openSuiteIds, setOpenSuiteIds] = useState<Record<string, boolean>>({});
+  const [suites, setSuites] = useState<Suite[]>([]); // Initialize suites as empty array
 
-  // No need for useEffect and fetch, as data is loaded from the JSON file
-  const [suites, setSuites] = useState<Suite[]>(suitesData);
+  useEffect(() => {
+    fetch('http://localhost:8080/api/suites') // Modify URL as needed
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => setSuites(data))
+      .catch(error => console.error('There was a problem with the fetch operation:', error));
+  }, []); // Empty dependency array to run only once
+
 
   const handleSuiteNameClick = (suiteId: string) => {
     const suite = suites.find(s => s.id === suiteId);
