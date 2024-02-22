@@ -7,7 +7,7 @@ import Breadcrumbs from '@mui/joy/Breadcrumbs';
 import Link from '@mui/joy/Link';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import CollapsibleSuiteList from './CollapsibleSuiteList';
+import SuiteAndAppsTabs from './SuiteAndAppsTabs';
 import SessionTable from './SessionTable';
 import SuiteAppsContext from '../context/SuiteAppsContext';
 import TextField from '@mui/joy/TextField';
@@ -105,7 +105,7 @@ export default function Launcher() {
             gap: 2, // Space between components
           }}
         >
-          <CollapsibleSuiteList />
+          <SuiteAndAppsTabs />
           <SessionTable />
         </Box>
   </Box>

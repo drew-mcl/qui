@@ -1,11 +1,15 @@
-import * as React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '@mui/joy/Table';
-import Input from '@mui/joy/Input';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/joy/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SuiteAppsContext from '../context/SuiteAppsContext';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Input from '@mui/joy/Input';
+import Button from '@mui/material/Button';
+import SuiteAppsContext from '../context/SuiteAppsContext';
 
 
 // Define the type for your app structure
@@ -25,127 +29,138 @@ type SidecarType = {
   version: string;
 };
 
+const mockVersions = ["1.0", "1.1", "2.0"]; // Simplified mock, replace with fetch logic
+
+
 export default function SessionTable() {
-  const { apps, setApps } = React.useContext(SuiteAppsContext);
-  const handleVersionChange = (id: string, newVersion: string) => {
-    // Update the version of the specified app
-    const updatedApps = apps.map((app) =>
-      app.id === id ? { ...app, version: newVersion } : app
-    );
-    setApps(updatedApps);
+  const { apps, setApps } = useContext(SuiteAppsContext);
+  const [expandedRows, setExpandedRows] = useState<string[]>([]);
+
+  const toggleRow = (id: string) => {
+    setExpandedRows(expandedRows.includes(id) ? expandedRows.filter(rowId => rowId !== id) : [...expandedRows, id]);
   };
 
-  const handleSidecarVersionChange = (
-    appId: string,
-    sidecarIndex: number,
-    newVersion: string
+  const handleVersionChange = (
+    id: string,
+    newVersion: string,
+    isSidecar: boolean = false,
+    sidecarIndex: number | null = null
   ) => {
-    // Update the version of the specified sidecar for the app
-    const updatedApps = apps.map((app) => {
-      if (app.id === appId && app.sidecars) {
-        const updatedSidecars = app.sidecars.map((sidecar, index) =>
-          index === sidecarIndex
-            ? { ...sidecar, version: newVersion }
-            : sidecar
-        );
-        return { ...app, sidecars: updatedSidecars };
+    const updatedApps = apps.map(app => {
+      if (app.id === id) {
+        if (isSidecar && app.sidecars && typeof sidecarIndex === 'number') {
+          const updatedSidecars = app.sidecars.map((sidecar, index) =>
+            index === sidecarIndex ? { ...sidecar, version: newVersion } : sidecar
+          );
+          return { ...app, sidecars: updatedSidecars };
+        } else {
+          return { ...app, version: newVersion };
+        }
       }
       return app;
     });
     setApps(updatedApps);
   };
 
-  const handleRemoveApp = (id: string) => {
-    // Remove the specified app
-    const filteredApps = apps.filter((app) => app.id !== id);
-    setApps(filteredApps);
+  const handlePhaseChange = (id: string, newPhase: number) => {
+    const updatedApps = apps.map(app =>
+      app.id === id ? { ...app, phase: newPhase } : app
+    );
+    setApps(updatedApps);
   };
 
-  const [expandedRows, setExpandedRows] = React.useState<string[]>([]);
+  const submitSessionData = () => {
+    const sessionData = {
+      sessionId: "yourSessionId", // This should be dynamically fetched or passed as a prop
+      apps: apps.map(app => ({
+        name: app.name,
+        phase: app.phase,
+        version: app.version,
+        sidecars: app.sidecars ? app.sidecars : []
+      }))
+    };
 
-  const toggleRow = (id: string) => {
-    if (expandedRows.includes(id)) {
-      setExpandedRows(expandedRows.filter((rowId) => rowId !== id));
-    } else {
-      setExpandedRows([...expandedRows, id]);
-    }
+    console.log("Submitting session data:", JSON.stringify(sessionData, null, 2));
+    // Here you would use fetch or axios to send sessionData to your backend
   };
 
-  return (
-    <Table>
-        <thead>
+      return (
+    <div>
+      <Table>
+      <thead>
         <tr>
           <th>App</th>
           <th>Version</th>
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
-        {apps.map((app: AppType) => (
-          <React.Fragment key={app.id}>
-            <tr>
-            <td>{app.sidecars && app.sidecars.length > 0 && (
-                   <IconButton
-                    aria-label="expand row"
-                    variant="plain"
-                    color="neutral"
-                    size="sm"
-                    onClick={() => toggleRow(app.id)}
-                    >
-                    {expandedRows.includes(app.id) ? (
-                  <KeyboardArrowUpIcon />
-                ) : (
-                  <KeyboardArrowDownIcon />
-                )}
-                    </IconButton>
-                )}
-                </td>
-              <td>{app.name}</td>
-              <td>{app.phase}</td>
-              <td>
-                <Input
-                  value={app.version}
-                  onChange={(e) => handleVersionChange(app.id, e.target.value)}
-                />
-              </td>
-              <td>
-                <IconButton onClick={() => handleRemoveApp(app.id)}>
-                  <DeleteIcon />
-                </IconButton>
-              </td>
-            </tr>
-            {/* Collapsible row for sidecars */}
-            {expandedRows.includes(app.id) && app.sidecars && app.sidecars.length > 0 && (
+        <tbody>
+          {apps.map((app) => (
+            <React.Fragment key={app.id}>
               <tr>
-                <td colSpan={4}>
-                  <table>
-                    <tbody>
-                      {app.sidecars.map((sidecar: SidecarType, index: number) => (
-                        <tr key={sidecar.name}>
-                          <td>{sidecar.name}</td>
-                          <td>{sidecar.group}</td>
-                          <td>
-                            <Input
-                              value={sidecar.version}
-                              onChange={(e) =>
-                                handleSidecarVersionChange(
-                                  app.id,
-                                  index,
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </td>
-                        </tr>
+                <td>
+                  {/* Collapsible toggle button */}
+                  {app.sidecars && app.sidecars.length > 0 && (
+  <IconButton onClick={() => toggleRow(app.id)}>
+    {expandedRows.includes(app.id) ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+  </IconButton>
+)}
+
+                </td>
+                <td>{app.name}</td>
+                <td>
+                  <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                    <Select
+                      value={app.version}
+                      onChange={(e) => handleVersionChange(app.id, e.target.value)}
+                      label="Version"
+                    >
+                      {mockVersions.map((version) => (
+                        <MenuItem key={version} value={version}>{version}</MenuItem>
                       ))}
-                    </tbody>
-                  </table>
+                    </Select>
+                  </FormControl>
+                </td>
+                <td>
+                  <Input
+                    value={app.phase}
+                    type="number"
+                    onChange={(e) => handlePhaseChange(app.id, parseInt(e.target.value, 10))}
+                    sx={{ width: '70px' }}
+                  />
+                </td>
+                <td>
+                  <IconButton onClick={() => /* Implement remove logic */ {}}>
+                    <DeleteIcon />
+                  </IconButton>
                 </td>
               </tr>
-            )}
-          </React.Fragment>
-        ))}
-      </tbody>
-    </Table>
+              {expandedRows.includes(app.id) && app.sidecars?.map((sidecar, index) => (
+                <tr key={index}>
+                  <td></td> {/* Adjust according to your layout */}
+                  <td>{sidecar.name}</td>
+                  <td>
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                      <Select
+                        value={sidecar.version}
+                        onChange={(e) => handleVersionChange(app.id, e.target.value, true, index)}
+                        label="Version"
+                      >
+                        {mockVersions.map((version) => (
+                          <MenuItem key={version} value={version}>{version}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </td>
+                </tr>
+              ))}
+            </React.Fragment>
+          ))}
+        </tbody>
+      </Table>
+      <Button variant="contained" onClick={submitSessionData} sx={{ mt: 2 }}>
+        Submit Session
+      </Button>
+    </div>
   );
 }
